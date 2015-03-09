@@ -141,7 +141,9 @@ void pthreads_synchro_block(zval *this_ptr, zend_fcall_info *info, zend_fcall_in
 
 /* {{{ free synchronization object */
 void pthreads_synchro_free(pthreads_synchro sync TSRMLS_DC) {
-	pthread_cond_destroy(&sync->notify);
+	if (sync)
+		pthread_cond_destroy(&sync->notify);
+	}
 	pthreads_lock_free(sync->lock TSRMLS_CC);
 	free(sync);
 } /* }}} */
